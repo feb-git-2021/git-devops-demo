@@ -1,0 +1,93 @@
+﻿@model BookProject.Models.ViewModels.BookVM  
+
+
+@{
+    ViewData["Title"] = "InsertUpt";
+}
+
+@*<h1>Insert Or Update</h1>*@
+
+<partial name="_AlertPartial"/>
+
+<form method="post" asp-action="InsertUpt" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+      <div class="row pb-2" >
+          <h2 class="text-primary" >@(Model.Book.Id !=0 ? "Edit Book":"AddBook")</h2>
+          <hr/>
+      </div>
+      <div class ="mb-3">
+          <label asp-for="@Model.Book.BookTitle"></label>
+          <input asp-for="@Model.Book.BookTitle" class="form-control"/>
+          <span asp-validation-for="@Model.Book.BookTitle" class="text-danger"></span>
+      </div>
+
+       <div class ="mb-3">
+          <label asp-for="Book.Description"></label>
+          <textarea asp-for="Book.Description" rows="3" class="form-control"></textarea>
+         @* <span asp-validation-for="BookTitle" class="text-danger"></span>*@
+      </div>
+       <div class ="mb-3">
+          <label asp-for="Book.Price"></label>
+          <input asp-for="Book.Price" class="form-control"/>
+          <span asp-validation-for="Book.Price" class="text-danger"></span>
+      </div>
+      <div class ="mb-3">
+          <label asp-for="Book.ImageUrl"></label>
+          <input id="uploadbox" type="file" asp-for="Book.ImageUrl" name="file" class="form-control"/>
+         
+      </div>
+
+       <div class ="mb-3">
+          <label asp-for="Book.CategoryId"></label>
+         <select asp-for="Book.CategoryId" asp-items="@Model.CategoryList" class="form-select">
+             <option disabled selected>--Select Category--</option>
+         </select>
+           <span asp-validation-for="Book.CategoryId" class="text-danger"></span>
+      </div>
+       @* <div class ="mb-3">
+          <label asp-for="CategoryId"></label>
+         <select asp-for="CategoryId" asp-items="@(ViewData["CategoryList1"] as IEnumerable<SelectListItem>)"                   class="form-select">
+             <option disabled selected>--Select Category--</option>
+         </select>
+           <span asp-validation-for="CategoryId" class="text-danger"></span>
+      </div>*@
+
+      <div>
+            @if(Model.Book.Id != 0)
+            {
+                <button type="submit" class="btn btn-primary">Update</button>
+            }
+            else
+            {
+                <button  type="submit" onclick="return ValidateInput()" class="btn btn-primary">Create</button>
+            }
+          
+           <a asp-controller="Book" asp-action="Index" class="btn btn-default">Back To List</a>
+      </div>
+
+    </div>
+</form>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+    
+
+
+<script>
+    function ValidateInput(){
+
+    if(document.getElementById("uploadbox").value == ""){
+        Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please upload a image file!',
+        
+    })
+    return false;
+    }
+    return true; 
+}
+</script>
+}
+

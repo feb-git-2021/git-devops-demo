@@ -1,0 +1,13 @@
+﻿@model BookProject.Models.Models.Category
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<h3>@Model.CategoryName</h3>
+<p>@Model.DisplayOrder</p>
+<p>@Model.CreateDateTime</p>
+
+<a asp-controller="Categories" asp-action="Index" class="btn btn-outline-info">Back</a>
+
